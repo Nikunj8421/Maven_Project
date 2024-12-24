@@ -1,20 +1,31 @@
-pipeline{
+pipeline {
     agent any
-    stages{
-        stage ('scm checkout')
-        {steps{git 'https://github.com/Nikunj8421/mavenproject.git'}}
-
-        stage ('validate the job')
-        {steps{withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA', maven: 'Maven', mavenSettingsConfig: '', traceability: true) {
-            sh 'mvn validate'
-
-        stage ('compile the job')
-        {steps{withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA', maven: 'Maven', mavenSettingsConfig: '', traceability: true) {
-            sh 'mvn compile'
-
-        stage ('build the job')
-        {steps{withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA', maven: 'Maven', mavenSettingsConfig: '', traceability: true) {
-            sh 'mvn package'
-}}}
+    stages {
+        stage('SCM Checkout') {
+            steps {
+                git 'https://github.com/Nikunj8421/mavenproject.git'
+            }
+        }
+        stage('Validate the Job') {
+            steps {
+                withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA', maven: 'Maven', mavenSettingsConfig: '', traceability: true) {
+                    sh 'mvn validate'
+                }
+            }
+        }
+        stage('Compile the Job') {
+            steps {
+                withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA', maven: 'Maven', mavenSettingsConfig: '', traceability: true) {
+                    sh 'mvn compile'
+                }
+            }
+        }
+        stage('Build the Job') {
+            steps {
+                withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA', maven: 'Maven', mavenSettingsConfig: '', traceability: true) {
+                    sh 'mvn package'
+                }
+            }
+        }
     }
 }
