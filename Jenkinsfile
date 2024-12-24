@@ -4,9 +4,9 @@ pipeline{
         stage ('scm checkout')
         {steps{git 'https://github.com/Nikunj8421/mavenproject.git'}}
 
-        stage ('validate the job')
+        stage ('compile the job')
         {steps{withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA', maven: 'Maven', mavenSettingsConfig: '', traceability: true) {
-            sh 'mvn validate'
+            sh 'mvn compile'
 }}}
     }
 }
