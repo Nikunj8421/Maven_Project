@@ -1,31 +1,27 @@
-pipeline {
-    agent any
-    stages {
-        stage('SCM Checkout') {
-            steps {
-                git 'https://github.com/Nikunj8421/mavenproject.git'
-            }
-        }
-        stage('Validate the Job') {
-            steps {
-                withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA', maven: 'Maven', mavenSettingsConfig: '', traceability: true) {
-                    sh 'mvn validate'
-                }
-            }
-        }
-        stage('Compile the Job') {
-            steps {
-                withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA', maven: 'Maven', mavenSettingsConfig: '', traceability: true) {
-                    sh 'mvn compile'
-                }
-            }
-        }
-        stage('Build the Job') {
-            steps {
-                withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA', maven: 'Maven', mavenSettingsConfig: '', traceability: true) {
-                    sh 'mvn clean -B -DskipTests package'
-                }
-            }
-        }
-    }
+pipeline
+{
+agent any
+stages
+{
+ stage('scm checkout: download code from github')
+ {steps { git branch: 'master', url: 'https://github.com/Nikunj8421/simple-java-maven-app.git'  }}
+
+
+ stage('execute unit test framework')
+ {steps { withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA', maven: 'Maven-3.9.9', mavenSettingsConfig: '', traceability: true) {
+    sh 'mvn test'
+} } }
+
+
+ stage('generate artifact')
+ {steps { withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA', maven: 'Maven-3.9.9', mavenSettingsConfig: '', traceability: true) {
+    sh 'mvn clean -B -DskipTests package'
+} } }
+
+ stage('deploy to tomcat')
+{ steps { sshagent(['DevCICD'])
+  { sh 'scp -o StrictHostKeyChecking=no webapp/target/webapp.war ec2-user@13.126.84.79/:/usr/share/tomcat/webapps'  } } }
+  
+
+}
 }
