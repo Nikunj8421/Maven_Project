@@ -20,7 +20,7 @@ stages
 
  stage('deploy to tomcat')
 { steps { sshagent(['DevCICD'])
-  { sh 'scp -o StrictHostKeyChecking=no webapp/target/webapp.war ec2-user@13.126.84.79/:/usr/share/tomcat/webapps'  } } }
+  { sh 'scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/Maven-Project/target/my-app-1.0-SNAPSHOT.jar ec2-user@13.126.84.79/:/usr/share/tomcat/webapps'  } } }
   
 
 }
