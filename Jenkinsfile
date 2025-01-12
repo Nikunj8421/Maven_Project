@@ -12,7 +12,6 @@ stages
     sh 'mvn test'
 } } }
 
-
  stage('generate artifact')
  {steps { withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA', maven: 'Maven-3.9.9', mavenSettingsConfig: '', traceability: true) {
     sh 'mvn clean -B -DskipTests package'
