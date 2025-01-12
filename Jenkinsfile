@@ -23,7 +23,7 @@ pipeline {
         stage('Build the Job') {
             steps {
                 withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA', maven: 'Maven', mavenSettingsConfig: '', traceability: true) {
-                    sh 'mvn package'
+                    sh 'mvn clean -B DskipTests package'
                 }
             }
         }
