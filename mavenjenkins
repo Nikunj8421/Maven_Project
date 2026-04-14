@@ -6,9 +6,20 @@ stages
 stage ("Scm checkout")
   {steps { git 'https://github.com/Nikunj8421/Maven_Project.git' }}
 
-stage ("Maven Validation")
+stage ("Maven Compile")
   {steps{ withMaven(jdk: 'JDK_HOME', maven: 'MVN_HOME', traceability: true) {
-     sh 'mvn validate'
+     sh 'mvn compile'
 }}}
+
+stage ("Maven Test")
+  {steps{ withMaven(jdk: 'JDK_HOME', maven: 'MVN_HOME', traceability: true) {
+     sh 'mvn test'
+}}}
+
+stage ("build the code")
+  {steps{ withMaven(jdk: 'JDK_HOME', maven: 'MVN_HOME', traceability: true) {
+     sh 'mvn clean -B -DskipTests package'
+}}}
+
 }
 }
