@@ -8,7 +8,7 @@ stage ("Scm checkout")
 
 stage ("Maven Validation")
   {steps{ withMaven(jdk: 'JDK_HOME', maven: 'MVN_HOME', traceability: true) {
-     sh 'mvn valiate'
+     sh 'mvn validate'
 }}}
 }
 }
